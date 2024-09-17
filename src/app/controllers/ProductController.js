@@ -17,4 +17,4 @@ async store(request, response) {
 }
 }
 
-export default new ProduvtController()
+export default new ProductController()
