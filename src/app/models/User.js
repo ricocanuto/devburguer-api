@@ -13,6 +13,8 @@ class User extends Model {
             },
             {
                 sequelize,
+                timestamps: true,     // Adiciona createdAt e updatedAt automaticamente
+                underscored: true,    // Usa snake_case nas colunas, conforme sua migração
             },
         );
 
@@ -26,7 +28,7 @@ class User extends Model {
     }
 
     checkPassword(password) {
-        bcrypt.compare(password, this.password_hash);
+        return bcrypt.compare(password, this.password_hash); // Adiciona return para retornar o resultado da comparação
     }
 }
 
