@@ -10,6 +10,7 @@ class Category extends Model {
             },
         );
     
+        return this;
     }
 }
 
