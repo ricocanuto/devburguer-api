@@ -25,7 +25,7 @@ class ProductController {
         }
 
 
-        const { filename: path } = request.file;
+       const path = request.file ? request.file.filename : null;
         const { name, price, category_id, offer } = request.body;
 
         const product = await Product.create({
@@ -65,31 +65,25 @@ class ProductController {
         if (!findProduct) {
             return response
             .status(400)
-            .json({ error: 'Make sure teh product ID is correct' });
+            .json({ error: 'Make sure the product ID is correct' });
         }
 
-        let path;
-        if (request.file) {
-            path = request.file.filename
-        }
+let path;
+if (request.file) {
+    path = request.file.filename;
+}
 
-        const { name, price, category_id, offer } = request.body;
+const { name, price, category_id, offer } = request.body;
 
-        const product = await Product.create({
-            name,
-            price,
-            category_id,
-            path,
-            offer,
-        },
-    {
-        where: {
-            id,
-        },
-      },
-    );
+await findProduct.update({
+    name,
+    price,
+    category_id,
+    path,
+    offer,
+});
 
-        return response.status(201).json(product);
+return response.status(200).json(findProduct);
     }
 
     async index(request, response) {

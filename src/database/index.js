@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize';
 import mongoose from 'mongoose';
-
 import configDatabase from '../config/database';
 
 import User from '../app/models/User';
@@ -24,11 +23,9 @@ class Database {
         );
   }
 
-  mongo() {
-    this.mongoConnection = mongoose.connect('mongodb://localhost:27017/devburguer',
-
-    );
-  }
+  mongo(){
+    this.mongooseConnection = mongoose.connect('mongodb://localhost:27017/devburguer')
+}
 }
 
 
