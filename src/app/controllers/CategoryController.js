@@ -21,6 +21,7 @@ class CategoryController {
             return response.status(401).json();
         }
 
+        const { filename: path } = request.file; // Pegamos o nome do arquivo enviado.
         const { name } = request.body;
 
         const categoryExists = await Category.findOne({
@@ -35,6 +36,7 @@ class CategoryController {
 
         const { id } = await Category.create({
             name,
+            path, // Salve o path aqui para a categoria ter foto.
         });
 
         return response.status(201).json({ id, name });

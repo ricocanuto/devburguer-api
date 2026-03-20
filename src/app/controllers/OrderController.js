@@ -64,13 +64,13 @@ class OrderController {
 
     async index(request, response) {
         return response.json({
-            message: 'Listagem de pedidos funcionando',
+            message: 'Pedidos realizados',
         });
     }
 
     async update(request, response) {
         return response.json({
-            message: 'Update funcionando',
+            message: 'Pedido em preparação',
         });
     }
 }
