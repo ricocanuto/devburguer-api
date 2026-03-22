@@ -15,18 +15,23 @@ class Database {
     }
 
     init() {
-        this.connection = new Sequelize(configDatabase);   
+        this.connection = new Sequelize(configDatabase); 
         models
-        .map((model) => model.init(this.connection))
-        .map(
-            (model) => model.associate && model.associate(this.connection.models),
+            .map((model) => model.init(this.connection))
+            .map(
+                (model) => model.associate && model.associate(this.connection.models),
+            );
+    }
+
+    mongo() {
+        this.mongoConnection = mongoose.connect(
+            'mongodb://localhost:27017/devburguer',
+            {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            }
         );
-  }
-
-  mongo(){
-    this.mongooseConnection = mongoose.connect('mongodb://localhost:27017/devburguer')
+    }
 }
-}
-
 
 export default new Database();
