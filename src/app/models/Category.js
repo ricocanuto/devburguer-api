@@ -4,14 +4,9 @@ class Category extends Model {
     super.init(
       {
         name: Sequelize.STRING,
-        path: Sequelize.STRING,
-        url: {
-          type: Sequelize.VIRTUAL,
-          get() {
-            return `http://localhost:3001/category-file/${this.path}`;
-          },
+        
         },
-      },
+      
       {
         sequelize,
         tableName: 'categories',

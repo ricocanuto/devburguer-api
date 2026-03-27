@@ -33,4 +33,6 @@ routes.post('/orders', OrderController.store);
 routes.get('/orders', OrderController.index);
 routes.put('/orders/:id', OrderController.update);
 
+routes.get('/users', adminMiddleware, UserController.index);
+
 export default routes;

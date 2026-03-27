@@ -5,9 +5,8 @@
 //  * update => Atualizar
 //  * delete => Deletar
 
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
-import bcrypt from 'bcrypt'; // Adiciona bcrypt para hashing de senha
 
 import User from '../models/User';
 
@@ -17,7 +16,7 @@ class UserController {
     const schema = Yup.object({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
-      password: Yup.string().min(6).required(), // Valida password e não password_hash
+      password: Yup.string().min(6).required(), 
       admin: Yup.boolean(),
     });
 
@@ -41,15 +40,12 @@ class UserController {
       return response.status(400).json({ error: 'User already exists' });
     }
 
-    // Cria o hash da senha
-    const password_hash = await bcrypt.hash(password, 10);
-
     // Cria o novo usuário no banco de dados
     const user = await User.create({
-      id: v4(),
+      id: uuidv4(),
       name,
       email,
-      password_hash,
+      password,
       admin,
     });
 
@@ -59,6 +55,14 @@ class UserController {
       email,
       admin,
     });
+  }
+
+   async index(_request, response) {
+    const users = await User.findAll({
+      attributes: ['id', 'name', 'email', 'admin'],
+    });
+
+    return response.json(users);
   }
 }
 

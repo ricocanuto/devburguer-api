@@ -11,47 +11,42 @@ class SessionController {
             password: Yup.string().min(6).required(),
         });
 
-        // Tenta validar o corpo da requisição
-        try {
-            await schema.validate(request.body, { abortEarly: false });
-        } catch (err) {
-            return response.status(400).json({ 
-                error: 'Validation fails', 
-                messages: err.errors 
-            });
-        }
+         try {
+      await schema.validate(request.body, { abortEarly: false });
+    } catch (err) {
+      const errors = err.inner.map(e => e.message);
+      return response.status(400).json({ errors });
+    }
 
-        const { email, password } = request.body;
+    const { email, password } = request.body;
 
-        // Verifica se o usuário existe
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({
+            where: { email },
+        });
 
         if (!user) {
-            return response.status(401).json({
-                error: 'Make sure your email or password is correct',
-            });
+            return response.status(401).json({error: 'Credenciais inválidas'});
         }
 
-        // Verifica se a senha é correta
         const isSamePassword = await user.checkPassword(password);
 
         if (!isSamePassword) {
-            return response.status(401).json({
-                error: 'Make sure your email or password is correct',
-            });
+            return response.status(401).json({ error: 'Credenciais inválidas'});
         }
 
-        // Retorna o token JWT e os dados do usuário
+        const token = jwt.sign({ id: user.id, name: user.name, admin: user.admin },
+            authConfig.secret,{ expiresIn: authConfig.expiresIn });
+
         return response.json({
             id: user.id,
             name: user.name,
             email: user.email,
             admin: user.admin,
-            token: jwt.sign({ id: user.id, name: user.name }, authConfig.secret, {
-                expiresIn: authConfig.expiresIn,
-            }),
-        });
+            token
+         });
     }
 }
 
 export default new SessionController();
+
+

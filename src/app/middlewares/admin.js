@@ -1,8 +1,6 @@
 const adminMiddleware = (request, response, next) => {
-  const isUserAdmin = request.isUserAdmin;
-
-  if (!isUserAdmin) {
-    return response.status(401).json();
+  if (!request.isUserAdmin) {
+    return response.status(403).json({ error: 'User is not admin' });
   }
 
   return next();
