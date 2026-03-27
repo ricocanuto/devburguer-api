@@ -27,7 +27,7 @@ const authMiddleware = (request, response, next) => {
     request.user = decoded; //opcional: payload completo para usos futuros
     
     return next();
-  } catch (_err) {
+  } catch (err) {
     return response.status(401).json({ error: 'Token is invalid' });
   }
 };
