@@ -25,14 +25,15 @@ class SessionController {
         });
 
         if (!user) {
-            return response.status(401).json({error: 'Credenciais inválidas'});
-        }
+        // Logar no terminal ajuda você a saber que o e-mail não foi achado
+        console.log(`Tentativa de login: Usuário ${email} não encontrado.`);
+        return response.status(401).json({ error: 'Credenciais inválidas' });
+    }
 
-        const isSamePassword = await user.checkPassword(password);
-
-        if (!isSamePassword) {
-            return response.status(401).json({ error: 'Credenciais inválidas'});
-        }
+    if (!(await user.checkPassword(password))) {
+        console.log(`Tentativa de login: Senha incorreta para o e-mail ${email}.`);
+        return response.status(401).json({ error: 'Credenciais inválidas' });
+    }
 
         const token = jwt.sign({ id: user.id, name: user.name, admin: user.admin },
             authConfig.secret,{ expiresIn: authConfig.expiresIn });
