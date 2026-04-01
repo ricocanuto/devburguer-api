@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres
+    container_name: devburguer-api-postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: devburguer-api
+    ports:
+      - 5432:5432
+
+  mongo:
+    image: mongo
+    container_name: devburguer-api-mongo
+    ports:
+      - 27017:27017
