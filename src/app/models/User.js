@@ -10,11 +10,13 @@ class User extends Model {
                 password: Sequelize.VIRTUAL,
                 password_hash: Sequelize.STRING,
                 admin: Sequelize.BOOLEAN,
+                
             },
             {
                 sequelize,
                 timestamps: true,     // Adiciona createdAt e updatedAt automaticamente
                 underscored: true,    // Usa snake_case nas colunas, conforme sua migração
+                tableName: 'Users',
             },
         );
 
