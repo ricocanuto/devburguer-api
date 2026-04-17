@@ -4,7 +4,13 @@ class Category extends Model {
     super.init(
       {
         name: Sequelize.STRING,
-        
+        path: Sequelize.STRING,
+        url: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return `http://localhost:3001/category-file/${this.path}`
+          },
+        },
         },
       
       {
@@ -15,7 +21,7 @@ class Category extends Model {
 
     return this;
   }
-  // Define a associação com o modelo Product
+ 
   static associate(models) {
     this.hasMany(models.Product, {
       foreignKey: 'category_id',

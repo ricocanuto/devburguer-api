@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import authConfig from '../../config/auth';
+import authConfig from '../../config/auth.js';
 
 const authMiddleware = (request, response, next) => {
   const authToken = request.headers.authorization;
@@ -28,6 +28,7 @@ const authMiddleware = (request, response, next) => {
     
     return next();
   } catch (err) {
+    // Token inválido - erro ignorado, apenas retorna 401
     return response.status(401).json({ error: 'Token is invalid' });
   }
 };

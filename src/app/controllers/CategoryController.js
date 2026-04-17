@@ -14,15 +14,13 @@ class CategoryController {
             return response.status(400).json({ error: err.errors });
         }
 
-        // --- AJUSTE DE SEGURANÇA AQUI ---
         const user = await User.findByPk(request.userId);
 
         // Verificamos se o usuário existe ANTES de acessar .admin
         if (!user || !user.admin) {
             return response.status(401).json({ error: 'Acesso negado: Usuário não é administrador' });
         }
-        // --------------------------------
-
+        
         const { filename: path } = request.file;
         const { name } = request.body;
 
@@ -53,16 +51,15 @@ class CategoryController {
             return response.status(400).json({ error: err.errors });
         }
 
-        // --- REPLICANDO O AJUSTE NO UPDATE ---
+        
         const user = await User.findByPk(request.userId);
 
         if (!user || !user.admin) {
             return response.status(401).json({ error: 'Acesso negado: Usuário não é administrador' });
         }
-        // ------------------------------------
-
+        
         const { name } = request.body;
-        const { id } = request.params; // Lembre-se de pegar o ID da categoria que será editada
+        const { id } = request.params; 
 
         let path;
         if (request.file) {
