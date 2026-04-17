@@ -8,7 +8,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 
-import User from '../models/User';
+import User from '../models/User.js';
 
 class UserController {
   async store(request, response) {

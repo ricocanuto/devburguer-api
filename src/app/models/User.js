@@ -16,7 +16,7 @@ class User extends Model {
                 sequelize,
                 timestamps: true,     // Adiciona createdAt e updatedAt automaticamente
                 underscored: true,    // Usa snake_case nas colunas, conforme sua migração
-                tableName: 'Users',
+                tableName: 'users',
             },
         );
 
