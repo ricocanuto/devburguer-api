@@ -2,10 +2,9 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth.js';
 
 const authMiddleware = (request, response, next) => {
+  console.log('HEADER AUTH:', request.headers.authorization);
   const authToken = request.headers.authorization;
-// TESTE TEMPORÁRIO: Ignore o que vem do Insomnia e use o token do Ricardo direto aqui
-  // Cole o token do Ricardo entre as aspas abaixo:
-  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVlZjVkNmQ2LWYyMzUtNDE0My1hMWMyLWIzY2IyZjVlNDFiNiIsIm5hbWUiOiJSaWNhcmRvIiwiYWRtaW4iOnRydWUsImlhdCI6MTc3NDQ4NDQyOCwiZXhwIjoxNzc0OTE2NDI4fQ.GpwpqGQGaR6HN7U3tdnCcS4uddXSww9EuxDLqZlNg28";
+
   if (!authToken) {
     return response.status(401).json({ error: 'Token not provided' });
  }
@@ -18,19 +17,20 @@ const authMiddleware = (request, response, next) => {
   const token = parts[1];
 
     try {
-    // jwt.verify retorna o payload decodificado
-    const decoded = jwt.verify(token, authConfig.secret);
+  const decoded = jwt.verify(token, authConfig.secret);
 
-    request.userId = decoded.id;
-    request.userName = decoded.name;
-    request.isUserAdmin = !!decoded.admin; // lembre-se de incluir 'admin' no token
-    request.user = decoded; //opcional: payload completo para usos futuros
-    
-    return next();
-  } catch (err) {
-    // Token inválido - erro ignorado, apenas retorna 401
-    return response.status(401).json({ error: 'Token is invalid' });
-  }
+  console.log('TOKEN OK:', decoded);
+
+  request.userId = decoded.id;
+  request.userName = decoded.name;
+  request.isUserAdmin = !!decoded.admin;
+
+  return next();
+} catch (error) {
+  console.log('TOKEN ERROR:', error.message);
+  
+  return response.status(401).json({ error: 'Token is invalid' });
+}
 };
 
 export default authMiddleware;
