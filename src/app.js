@@ -5,6 +5,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import routes from './routes.js';
 
+
 import './database/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
