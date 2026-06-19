@@ -36,6 +36,6 @@ routes.put('/orders/:id', OrderController.update);
 
 routes.get('/users', adminMiddleware, UserController.index);
 
-routes.post("/create-payment-intent", CreatePaymentIntentController.store);
+routes.post("/Create-Payment-Intent", CreatePaymentIntent.store);
 
 export default routes;
