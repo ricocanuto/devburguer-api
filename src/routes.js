@@ -6,7 +6,7 @@ import OrderController from './app/controllers/OrderController.js';
 import ProductController from './app/controllers/ProductController.js';
 import SessionController from './app/controllers/SessionController.js';
 import UserController from './app/controllers/UserController.js';
-import CreatePaymentIntentController from './app/controllers/stripe/CreatePaymentIntent.js';
+import CreatePaymentIntentController from './app/controllers/Stripe/CreatePaymentIntent.js';
 
 import adminMiddleware from './app/middlewares/admin.js';
 import authMiddleware from './app/middlewares/auth.js';
@@ -36,6 +36,6 @@ routes.put('/orders/:id', OrderController.update);
 
 routes.get('/users', adminMiddleware, UserController.index);
 
-routes.post("/Create-Payment-Intent", CreatePaymentIntent.store);
+routes.post("/Create-Payment-Intent", CreatePaymentIntentController.store);
 
 export default routes;
