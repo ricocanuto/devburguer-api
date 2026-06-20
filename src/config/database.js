@@ -1,4 +1,4 @@
-export default {
+const config = {
     dialect: process.env.DB_DIALECT,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -10,5 +10,12 @@ export default {
         underscored: true,
         underscoredAll: true,
     },
+    dialectOptions: process.env.NODE_ENV === 'production' ? {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false, // Permite a conexão segura da Render para o Supabase
+        }
+    } : {},
 };
 
+export default config;
