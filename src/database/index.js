@@ -25,6 +25,8 @@ class Database {
 
     mongo() {
     this.mongooseConnection = mongoose.connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
         autoIndex: false,
     })
     .then(() => console.log('🍃 Conectado ao MongoDB Atlas com sucesso!'))
