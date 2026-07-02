@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
+import path from 'node:path';
+import express from 'express';
 
 import CategoryController from './app/controllers/CategoryController.js';
 import OrderController from './app/controllers/OrderController.js';
@@ -13,10 +15,13 @@ import authMiddleware from './app/middlewares/auth.js';
 import multerConfig from './config/multer.js';
 
 const routes = new Router();
-
 const upload = multer(multerConfig);
+const __dirname = path.resolve();
 
 // Rotas de Usuário e Sessão (Públicas)
+routes.use('/product-file', express.static(path.resolve(__dirname, 'uploads')));
+routes.use('/category-file', express.static(path.resolve(__dirname, 'uploads')));
+
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
