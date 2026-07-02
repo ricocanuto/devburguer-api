@@ -12,7 +12,8 @@ class Product extends Model {
                     get() {
                     const baseUrl = process.env.APP_URL || 'http://localhost:3001';
                     return `${baseUrl}/product-file/${this.path}`;
-    },
+        },
+            },
             },
             {
                 sequelize,
