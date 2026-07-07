@@ -2,6 +2,10 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth.js';
 
 const authMiddleware = (request, response, next) => {
+  if (request.url.includes('/product-file') || request.url.includes('/category-file')) {
+    return next();
+  }
+  
   console.log('HEADER AUTH:', request.headers.authorization);
   const authToken = request.headers.authorization;
 
